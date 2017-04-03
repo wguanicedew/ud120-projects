@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from time import time
 import pickle
 import numpy
 numpy.random.seed(42)
@@ -39,5 +40,32 @@ labels_train   = labels_train[:150]
 
 ### your code goes here
 
+from sklearn import tree
+clf = tree.DecisionTreeClassifier()
 
+#print features_train[0]
+#for i in range(len(features_train[0])):
+#    if features_train[0][i]
+print len(features_train[0])
 
+t0 = time()
+clf.fit(features_train, labels_train)
+print "training time:", round(time()-t0, 3), "s"
+
+t0 = time()
+pred = clf.predict(features_test)
+print "predict time:", round(time()-t0, 3), "s"
+
+t0 = time()
+from sklearn.metrics import accuracy_score
+score = accuracy_score(labels_test, pred)
+print score
+print "score time:", round(time()-t0, 3), "s"
+
+for i, f in enumerate(clf.feature_importances_):
+    if f > 0.2:
+        print i 
+        print f 
+        print vectorizer.get_feature_names()[i]
+
+print clf.score(features_test, labels_test)

@@ -9,11 +9,31 @@ from feature_format import featureFormat, targetFeatureSplit
 
 ### read in data dictionary, convert to numpy array
 data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r") )
+
+data_dict.pop('TOTAL', 0)
+
+for name in data_dict:
+    if data_dict[name]['bonus'] !='NaN' and int(data_dict[name]['bonus']) > 5000000:
+        print name
+        print data_dict[name]['salary']
+        print data_dict[name]['bonus']
+
 features = ["salary", "bonus"]
 data = featureFormat(data_dict, features)
 
 
 ### your code below
 
+data_sorted = sorted(data, key=lambda x:x[0])
+
+for point in data_sorted:
+    # print point
+    salary = point[0]
+    bonus = point[1]
+    matplotlib.pyplot.scatter( salary, bonus )
+
+matplotlib.pyplot.xlabel("salary")
+matplotlib.pyplot.ylabel("bonus")
+matplotlib.pyplot.show()
 
 
